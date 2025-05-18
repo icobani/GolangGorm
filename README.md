@@ -1,5 +1,7 @@
 # GolangGorm
 
+![Logo](Logo.jpg)
+
 
 # Projenin açılması
 
