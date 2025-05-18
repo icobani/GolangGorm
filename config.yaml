@@ -1,0 +1,14 @@
+environment: test
+db:
+  test:
+    host: localhost
+    port: 5432
+    user: ici
+    password: 1
+    dbname: arrs_planning_test
+  live:
+    host: localhost
+    port: 5432
+    user: ici
+    password: 1
+    dbname: arrs_planning
