@@ -1,6 +1,6 @@
 # GolangGorm
 
-![Logo](Logo.jpg)
+![Logo](/assets/Logo.jpg)
 
 
 # Projenin açılması
@@ -27,3 +27,6 @@ docker run --name my-postgres \
   -d postgres:15
 ```
 
+## Projenin Amacı :
+
+Ingiltere Sağlık sisteminde devlet teşviklerinin hastanelere dağıtılması için personel bazında bildirimlerin yapılması ve takip edilmesi gerekmektedir. Bunları kullanıcı giriş yaparak kendi hastaneleri için bu tanımların yapılabilmesi sağlanacaktır.
