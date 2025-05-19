@@ -36,6 +36,10 @@ Ingiltere Sağlık sisteminde devlet teşviklerinin hastanelere dağıtılması 
 
 Additional Roles Reimbursement Scheme anlamına gelir. Bu, Birleşik Krallık Ulusal Sağlık Hizmeti (NHS) kapsamında Primary Care Networks (PCNs) tarafından kullanılan bir finansman ve istihdam programıdır.
 
+
+
+![ARRS](/assets/ARRS_Logo.jpg)
+
 ## ARRS Nedir?
 
 ### Additional Roles Reimbursement Scheme (ARRS):
