@@ -35,5 +35,8 @@ func TestMigrate(t *testing.T) {
 		log.Println("Error: ", err)
 		return
 	}
+	if err := config.DB.AutoMigrate(&models.User{}); err != nil {
+		t.Fatalf("AutoMigrate hatası: %v", err)
+	}
 
 }
