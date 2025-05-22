@@ -47,4 +47,56 @@ func TestArrsPlanningTest(t *testing.T) {
 		log.Println("User Created:")
 		service.PrintPrettyStruct(user)
 	}
+
+	req = ArrsPlanningService.RegisterUserRequest{
+		FullName: "Enes Emin Uçar",
+		UserName: "ensemio",
+		Password: "070706",
+		Email:    "ucarenesemin@gmail.com",
+		Phone:    "5317887577",
+	}
+
+	user, err := service.RegisterUser(req)
+	if err != nil {
+		log.Println("Error: ", err)
+	} else {
+		log.Println("User Created:")
+		service.PrintPrettyStruct(user)
+
+	}
+
+}
+
+func TestChangeMyPassword(t *testing.T) {
+
+	if err := config.InitConfigFile(); err != nil {
+		t.Fatalf("Config yükelenemedi : %v", err)
+
+		return
+
+	}
+
+	if err := config.InitDB(); err != nil {
+		t.Fatalf("DB yükelenemedi : %v", err)
+		return
+
+	}
+
+	service := ArrsPlanningService.NewArrsPlanningService(config.Params, config.DB)
+
+	userID := uint64(1) // Değiştir: Şifresini değiştirmek istediğin kullanıcının ID'si
+	oldPassword := "112233"
+	newPassword := "122333"
+
+	changeReq := ArrsPlanningService.ChangePasswordRequest{
+		UserID:      userID,
+		OldPassword: oldPassword,
+		NewPassword: newPassword,
+	}
+	if err := service.ChangeMyPassword(changeReq); err != nil {
+		t.Fatalf("Şifre değiştirilirken hata oluştu: %v", err)
+	} else {
+		t.Log("Şifre başarıyla değiştirildi")
+	}
+
 }
