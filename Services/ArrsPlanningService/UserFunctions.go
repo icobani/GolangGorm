@@ -56,6 +56,32 @@ func (s *ArrsPlanningService) LoginUser() {
 }
 
 // TODO: Enes bu iş sende
-func (s *ArrsPlanningService) ChangeMyPassword() {
+
+type ChangePasswordRequest struct {
+	UserID      uint64 `json:"user_id"`
+	OldPassword string `json:"old_password"`
+	NewPassword string `json:"new_password"`
+}
+
+func (s *ArrsPlanningService) ChangeMyPassword(req ChangePasswordRequest) error {
+	log.Println("Change My Password")
+
+	var user models.User
+	if err := s.DB.First(&user, req.UserID).Error; err != nil {
+		return errors.New("Kullanıcı bulunamadı")
+
+	}
+
+	if user.Password != req.OldPassword {
+		return errors.New("Eski şifre yanlış")
+
+	}
+
+	user.Password = req.NewPassword
+	if err := s.DB.Save(&user).Error; err != nil {
+		return errors.New("Şifre güncellenemedi")
+	}
+
+	return nil
 
 }
