@@ -12,12 +12,13 @@
 package ArrsPlanningService
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"errors"
-	"fmt"
-	"gorm.io/gorm"
 	"log"
 
 	"github.com/icobani/GolangGorm/models"
+	"gorm.io/gorm"
 )
 
 type RegisterUserRequest struct {
@@ -28,6 +29,9 @@ type RegisterUserRequest struct {
 	Phone    string `json:"phone"`
 }
 
+// RegisterUser registers a new user in the system and stores the user details in the database.
+// Returns the created user object and an error if any occurs during the operation.
+// An error is returned if the username already exists in the database.
 func (s *ArrsPlanningService) RegisterUser(req RegisterUserRequest) (resp models.User, err error) {
 	log.Println("Register User")
 
@@ -42,7 +46,7 @@ func (s *ArrsPlanningService) RegisterUser(req RegisterUserRequest) (resp models
 	resp = models.User{}
 	resp.FullName = req.FullName
 	resp.UserName = req.UserName
-	resp.Password = req.Password
+	resp.Password = s.GetMD5Hash(req.Password)
 	resp.Email = req.Email
 	resp.Phone = req.Phone
 	resp.Status = models.UserStatusPending
@@ -57,23 +61,26 @@ type LoginRequest struct {
 	Password string
 }
 
-type LoginResponse struct {
-	Message string
-}
-
-type UserService struct{}
-
-func (u *UserService) Login(req LoginRequest) (LoginResponse, error) {
-	if req.Username == "admin" && req.Password == "1234" {
-		return LoginResponse{Message: "Giriş başarılı"}, nil
+// LoginUser authenticates a user by validating the provided username and password against the database.
+// Returns the user object if credentials are correct, otherwise returns an error.
+func (s *ArrsPlanningService) LoginUser(req LoginRequest) (user models.User, err error) {
+	if req.Username == "" || req.Password == "" {
+		err = errors.New("username or password is empty")
+		return
 	}
-	return LoginResponse{}, fmt.Errorf("Kullanıcı adı veya şifre hatalı")
-}
-func (s *ArrsPlanningService) LoginUser(db *gorm.DB) *UserService {
-	return &UserService{}
-}
 
-// TODO: Enes bu iş sende
+	req.Password = s.GetMD5Hash(req.Password)
+
+	if err = s.DB.
+		Where("user_name = ? and password = ?",
+			req.Username, req.Password).
+		First(&user).Error; errors.Is(err, gorm.ErrRecordNotFound) {
+		err = errors.New("username or password is incorrect")
+		return
+	}
+
+	return
+}
 
 type ChangePasswordRequest struct {
 	UserID      uint64 `json:"user_id"`
@@ -81,25 +88,30 @@ type ChangePasswordRequest struct {
 	NewPassword string `json:"new_password"`
 }
 
-func (s *ArrsPlanningService) ChangeMyPassword(req ChangePasswordRequest) error {
+// ChangeMyPassword updates a user's password if the provided old password is correct. Returns an error if the operation fails.
+func (s *ArrsPlanningService) ChangeMyPassword(req ChangePasswordRequest) (err error) {
 	log.Println("Change My Password")
 
+	req.OldPassword = s.GetMD5Hash(req.OldPassword)
+	req.NewPassword = s.GetMD5Hash(req.NewPassword)
+
 	var user models.User
-	if err := s.DB.First(&user, req.UserID).Error; err != nil {
-		return errors.New("Kullanıcı bulunamadı")
-
-	}
-
-	if user.Password != req.OldPassword {
-		return errors.New("Eski şifre yanlış")
-
+	if err = s.DB.
+		Where("id = ? and password = ?",
+			req.UserID, req.OldPassword).
+		First(&user).Error; err != nil {
+		err = errors.New("user name or password is incorrect")
+		return
 	}
 
 	user.Password = req.NewPassword
-	if err := s.DB.Save(&user).Error; err != nil {
-		return errors.New("Şifre güncellenemedi")
-	}
+	err = s.DB.Save(&user).Error
 
-	return nil
+	return
+}
 
+// GetMD5Hash generates the MD5 hash of the input string and returns it as a hexadecimal encoded string.
+func (s *ArrsPlanningService) GetMD5Hash(text string) string {
+	hash := md5.Sum([]byte(text))
+	return hex.EncodeToString(hash[:])
 }
