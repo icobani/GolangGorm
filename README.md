@@ -72,3 +72,4 @@ Additional Roles Reimbursement Scheme anlamına gelir. Bu, Birleşik Krallık Ul
 ARRS, NHS’in geniş bir sağlık çalışanı kadrosunu aile hekimliği sistemine dahil ederek daha etkin, çok disiplinli ve sürdürülebilir bir birinci basamak sağlık hizmeti hedefinin parçasıdır.
 
 
+.
