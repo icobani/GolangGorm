@@ -84,9 +84,9 @@ func TestChangeMyPassword(t *testing.T) {
 
 	service := ArrsPlanningService.NewArrsPlanningService(config.Params, config.DB)
 
-	userID := uint64(1) // Değiştir: Şifresini değiştirmek istediğin kullanıcının ID'si
-	oldPassword := "112233"
-	newPassword := "122333"
+	userID := uint64(5) // Değiştir: Şifresini değiştirmek istediğin kullanıcının ID'si
+	oldPassword := "070707"
+	newPassword := "070706"
 
 	changeReq := ArrsPlanningService.ChangePasswordRequest{
 		UserID:      userID,
