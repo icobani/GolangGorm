@@ -13,6 +13,8 @@ package ArrsPlanningService
 
 import (
 	"errors"
+	"fmt"
+	"gorm.io/gorm"
 	"log"
 
 	"github.com/icobani/GolangGorm/models"
@@ -50,9 +52,25 @@ func (s *ArrsPlanningService) RegisterUser(req RegisterUserRequest) (resp models
 	return
 }
 
-// TODO : Taha bu iş sende
-func (s *ArrsPlanningService) LoginUser() {
-	log.Println("Login User")
+type LoginRequest struct {
+	Username string
+	Password string
+}
+
+type LoginResponse struct {
+	Message string
+}
+
+type UserService struct{}
+
+func (u *UserService) Login(req LoginRequest) (LoginResponse, error) {
+	if req.Username == "admin" && req.Password == "1234" {
+		return LoginResponse{Message: "Giriş başarılı"}, nil
+	}
+	return LoginResponse{}, fmt.Errorf("Kullanıcı adı veya şifre hatalı")
+}
+func (s *ArrsPlanningService) LoginUser(db *gorm.DB) *UserService {
+	return &UserService{}
 }
 
 // TODO: Enes bu iş sende
