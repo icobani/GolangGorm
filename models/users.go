@@ -37,9 +37,9 @@ func (u UserStatus) String() string {
 
 type User struct {
 	ID       uint64     `json:"id" gorm:"primaryKey"` // Kullanıcı Kimlik numarası
-	FullName string     `json:"fullname"`             // Ad Soyad
-	UserName string     `json:"username"`             // Kullanıcı Adı
-	Password string     `json:"password"`             // Şifre
+	FullName string     `json:"full_name"`            // Ad Soyad
+	UserName string     `json:"user_name"`            // Kullanıcı Adı
+	Password string     `json:"-"`                    // Şifre
 	Email    string     `json:"email"`                // Email Adresi
 	Phone    string     `json:"phone"`                // Telefon
 	Status   UserStatus `json:"status"`               // Durum
