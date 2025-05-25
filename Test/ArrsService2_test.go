@@ -22,7 +22,6 @@ import (
 func TestArrsPlanning2Test(t *testing.T) {
 	if err := config.InitConfigFile(); err != nil {
 		log.Println("Error: ", err)
-
 		return
 	}
 
