@@ -49,29 +49,32 @@ func TestArrsPlanning2Test(t *testing.T) {
 
 }
 
-func LoginUser(t *testing.T) {
+func TestLoginUser(t *testing.T) {
 	if err := config.InitConfigFile(); err != nil {
 		log.Println("Error: ", err)
 		return
 	}
+
 	if err := config.InitDB(); err != nil {
 		log.Println("Error: ", err)
 		return
 	}
+
 	service := ArrsPlanningService.NewArrsPlanningService(config.Params, config.DB)
 
-	userService := service.LoginUser(config.DB)
+	//userService := service.LoginUser(config.DB)
 
 	// Giriş denemesi
 	req := ArrsPlanningService.LoginRequest{
-		Username: "icobani",
-		Password: "112233",
+		Username: "ensemio",
+		Password: "070706",
 	}
-	resp, err := userService.Login(req)
+
+	resp, err := service.LoginUser(req)
 	if err != nil {
 		t.Errorf("Giriş başarısız: %v", err)
 	} else {
-		t.Logf("Başarılı giriş: %s", resp.Message)
+		service.PrintPrettyStruct(resp)
 	}
 
 }
