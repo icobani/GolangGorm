@@ -3,7 +3,7 @@ db:
   test:
     host: localhost
     port: 5432
-    user: postgres
+    user: ici
     password: 1
     dbname: arrs_planning_test
   live:
