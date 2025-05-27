@@ -6,6 +6,8 @@
 	Time        : 23:38
 	Notes       :
 
+	HasReimbursement bu parametre, pozisyonun geri ödeme alıp almayacağını belirtir. Eğer bu değer true ise, pozisyon geri ödeme almaya uygundur. bunu inceleyip eklemem gerek tekrar bakacağım
+
 
 */
 
