@@ -26,9 +26,10 @@ type PositionReimbursement struct {
 	IsSubsequent                 bool      `json:"is_subsequent_hire"`                // IsSubsequent indicates if this is a subsequent hire for the position, which may have different reimbursement rules or conditions.(Sonraki atama mı? (İlk olmayan))
 	IsStudent                    bool      `json:"is_student"`                        // IsStudent indicates if the position is for a student, which may have different reimbursement rules or conditions.(Öğrenci/çırak pozisyonu mu?)
 	IsOtherDirectPatientCareRole bool      `json:"is_other_direct_patient_care_role"` // IsOtherDirectPatientCareRole indicates if the position is for a role that involves direct patient care but is not specifically defined as a mental health practitioner or similar role.(Diğer doğrudan hasta bakımı rollerinden biri mi?)
-	HasReimbursement             bool      `json:"has_reimbursement"`                 // HasReimbursement indicates if the position is eligible for reimbursement.(Pozisyon geri ödeme almaya uygun mu?)
 	FundingNote                  string    `json:"funding_note"`                      // FundingNote provides additional information or notes regarding the funding associated with the position.(Geri ödemeye ilişkin ek notlar ve yerel anlaşma bilgileri)
+	ReimbursementRate            float32   `json:"reimbursement_rate"`                // 1.0 = %100, 0.5 = %50, 0.0 = %0 ReimbursementRate indicates the reimbursement percentage applied for the position.(Geri ödeme oranı, pozisyon için uygulanan geri ödeme yüzdesini gösterir.)
 	CreatedAt                    time.Time `json:"created_at"`                        // CreatedAt is the timestamp when the position reimbursement record was created.(Oluşturulma tarihi)
 	UpdatedAt                    time.Time `json:"updated_at"`                        // UpdatedAt is the timestamp when the position reimbursement record was last updated.(Güncellenme tarihi)
+
 	//Only50pReimbursementIsAvailableForTheFirstMHPAPCNHasHired     bool    `json:"only_50_p_reimbursement_is_available_for_the_first_mhpapcn_has_hired"`    // Only50pReimbursementIsAvailableForTheFirstMHPAPCNHasHired indicates if only 50% reimbursement applies for the first hire.
 }
