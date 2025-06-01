@@ -115,3 +115,19 @@ func (s *ArrsPlanningService) GetMD5Hash(text string) string {
 	hash := md5.Sum([]byte(text))
 	return hex.EncodeToString(hash[:])
 }
+
+func (s *ArrsPlanningService) GetUsers(search string) (users []models.User, err error) {
+
+	if search == "" {
+		err = s.DB.Find(&users).Error
+		return
+	} else {
+		err = s.DB.
+			Where("user_name LIKE ? OR full_name LIKE ? OR phone LIKE ? OR email LIKE ?",
+				"%"+search+"%", "%"+search+"%", "%"+search+"%", "%"+search+"%").
+			Find(&users).Error
+
+	}
+
+	return
+}
