@@ -19,5 +19,5 @@ import (
 func UserRoot(api *gin.RouterGroup) {
 
 	api.GET("/users", apicontroller.GetUsers)
-
+	api.PUT("/change_my_password", apicontroller.PutChangeMyPassword)
 }
