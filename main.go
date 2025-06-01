@@ -26,9 +26,10 @@ func main() {
 	if err := config.InitConfigFile(); err != nil {
 		log.Println("Error: ", err)
 	}
-
 	if err := config.InitDB(); err != nil {
 		log.Println("Error: ", err)
 	}
+
+	InitApi()
 
 }
